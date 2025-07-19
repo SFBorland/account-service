@@ -1,5 +1,6 @@
 package com.market.simulator.accountservice.service;
 
+import com.market.simulator.accountservice.exceptions.AccountAlreadyExistsException;
 import com.market.simulator.accountservice.exceptions.AccountNotFoundException;
 import com.market.simulator.accountservice.model.Account;
 import com.market.simulator.accountservice.repository.AccountRepository;
@@ -21,7 +22,15 @@ public class AccountService {
     Account account = accountRepository.getAccountByUserId(email);
 
     if (account == null) {
-      throw new AccountNotFoundException("");
+      throw new AccountNotFoundException("Account not found for user: " + email);
     }
+    return account;
+  }
+
+  public Account createAccount(Account account) {
+    if (accountRepository.existsById(account.getUserId())) {
+      throw new AccountAlreadyExistsException("Account already exists for user: " + account.getUserId());
+    }
+    return accountRepository.save(account);
   }
 }
