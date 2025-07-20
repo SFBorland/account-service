@@ -2,6 +2,8 @@ package com.market.simulator.accountservice.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
@@ -25,21 +27,22 @@ public class Account {
   @Column(nullable = false, unique = true)
   private String userId;
 
+  @Enumerated(EnumType.STRING)// Save enum as string in the database instead of ordinal.
   @Column(nullable = false)
   private AccountStatus accountStatus;
 
   private StatusReason statusReason;
 
   @Column(nullable = false)
-  private BigDecimal balance;
+  private BigDecimal balance = BigDecimal.ZERO;
 
   @Column(nullable = false)
-  private BigDecimal availableBalance;
+  private BigDecimal availableBalance = BigDecimal.ZERO;
 
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
-@PrePersist
+  @PrePersist
   protected void onCreate() {
     createdAt = LocalDateTime.now();
   }

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.market.simulator.accountservice.exceptions.AccountAlreadyExistsException;
 import com.market.simulator.accountservice.exceptions.AccountNotFoundException;
 import com.market.simulator.accountservice.model.Account;
+import com.market.simulator.accountservice.model.AccountStatus;
 import com.market.simulator.accountservice.repository.AccountRepository;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ public class AccountExceptionHandlerTest {
   private AccountService accountService;
 
   @Test
-  public void passingTest_returnsAccount() {
+  public void getAccountByUserId_returnsAccount() {
     String userId = "some@user.com";
     Account account = new Account();
     account.setUserId(userId);
@@ -38,22 +39,23 @@ public class AccountExceptionHandlerTest {
   }
 
   @Test
-  public void alpha() {
+  public void createAccount_returnsAccountWithExpectedFields() {
     String userId = "some@user.com";
     UUID accountId = UUID.randomUUID();
     Account account = new Account();
     account.setAccountId(accountId);
     account.setUserId(userId);
+    account.setAccountStatus(AccountStatus.ACTIVE);
 
-    Mockito.when(accountRepository.existsById(account.getUserId()))
+    Mockito.when(accountRepository.existsById(userId))
         .thenReturn(false);
 
-    Mockito.when(accountRepository.save(account))
+    Mockito.when(accountRepository.save(Mockito.any(Account.class)))
         .thenReturn(account);
 
-    accountService.createAccount(account);
+    Account resultAccount = accountService.createAccount(userId);
 
-    assertEquals(accountId, account.getAccountId());
+    assertEquals(accountId, resultAccount.getAccountId());
   }
 
 
@@ -70,13 +72,14 @@ public class AccountExceptionHandlerTest {
   @Test
   public void handleAccountAlreadyExistsException_returnsConflictWithMessage() {
     assertThrows(AccountAlreadyExistsException.class, () -> {
+      String userId = "dup@user.com";
       Account account = new Account();
-      account.setUserId("dup@user.com");
+      account.setUserId(userId);
 
-      Mockito.when(accountRepository.existsById("dup@user.com"))
+      Mockito.when(accountRepository.existsById(userId))
               .thenReturn(true);
 
-      accountService.createAccount(account);
+      accountService.createAccount(userId);
     });
   }
 }
