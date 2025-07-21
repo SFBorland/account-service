@@ -16,7 +16,7 @@ public class AccountCreateConsumer {
     this.accountService = accountService;
   }
 
-  @Scheduled(initialDelayString = "5000", fixedRate = 5000)
+//  @Scheduled(initialDelayString = "5000", fixedRate = 5000)
   public void consume() {
     try {
       accountService.createAccount("scheduled@user.com");
