@@ -30,6 +30,7 @@ public class AccountService {
 
   public Account createAccount(String userId) {
     if (accountRepository.existsByUserId(userId)) {
+      log.warn("Account already exists for user: {}", userId);
       throw new AccountAlreadyExistsException("Account already exists for user: " + userId);
     }
 
