@@ -12,13 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(name = "/account")
+@RequestMapping("/account")
 public class AccountController {
 
   private final AccountService accountService;
 
   public AccountController(AccountService accountService) {
     this.accountService = accountService;
+  }
+
+  @GetMapping("/RUOK")
+  public ResponseEntity<String> healthCheck() {
+    log.info("Received health check request for Account Service");
+    return ResponseEntity.ok("IMOK\n");
   }
 
   @GetMapping("/email/{email}")
