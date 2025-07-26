@@ -10,7 +10,7 @@
   </parent>
   <groupId>com.market.simulator</groupId>
   <artifactId>account-service</artifactId>
-  <version>0.0.7-SNAPSHOT</version>
+  <version>0.0.8-SNAPSHOT</version>
   <name>account-service</name>
   <description>account-service</description>
   <url/>
@@ -61,6 +61,11 @@
       <artifactId>h2</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
       <version>1.5.5.Final</version>
@@ -72,9 +77,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-    <groupId>org.springframework.kafka</groupId>
-    <artifactId>spring-kafka</artifactId>
-</dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
