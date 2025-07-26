@@ -10,7 +10,7 @@
   </parent>
   <groupId>com.market.simulator</groupId>
   <artifactId>account-service</artifactId>
-  <version>0.0.8-SNAPSHOT</version>
+  <version>0.0.9-SNAPSHOT</version>
   <name>account-service</name>
   <description>account-service</description>
   <url/>
