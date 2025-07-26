@@ -18,7 +18,7 @@ public class AccountExceptionHandler {
     String message = ex.getMessage() != null && !ex.getMessage().trim().isEmpty() ? ex.getMessage() : "Account not found";
     return ResponseEntity
         .status(HttpStatus.NOT_FOUND)
-        .body("Account not found: " + message);
+        .body(message);
   }
 
   @ExceptionHandler(AccountAlreadyExistsException.class)
